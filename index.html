@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Party Calculator — How Many Pizzas to Order for Your Group</title>
+<meta name="description" content="Calculate exactly how many pizzas to order for your party, office meeting, or family gathering. Slices by appetite, US topping ratios (pepperoni, cheese, meat lovers), homemade dough recipe, and USD bill split.">
+<link rel="canonical" href="https://sebiglesias.com.ar/pizza-calculator/">
+<meta name="theme-color" content="#F59E0B">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<!-- Google tag (gtag.js) GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2BNDBQP0W7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2BNDBQP0W7');
+</script>
+
+<!-- Open Graph / Social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pizza Party Calculator — How Many Pizzas to Order">
+<meta property="og:description" content="Calculate the exact number of pizzas for your party. Slice estimates, popular topping ratios, and easy bill split.">
+<meta property="og:url" content="https://sebiglesias.com.ar/pizza-calculator/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pizza Party Calculator">
+<meta name="twitter:description" content="Never run out of pizza or over-order again. Accurate pizza calculator for groups.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<!-- Google AdSense -->
+<meta name="google-adsense-account" content="ca-pub-3381238987477190">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381238987477190" crossorigin="anonymous"></script>
+
+<!-- Structured Data (WebApplication + FAQPage) -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pizza Party Calculator",
+    "url": "https://sebiglesias.com.ar/pizza-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "description": "Calculates the number of large pizzas to order for groups based on number of adults, kids, appetite levels, and standard US pizza sizes.",
+    "author": {
+      "@type": "Person",
+      "name": "Sebastián Iglesias",
+      "url": "https://sebiglesias.com.ar"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many pizzas do I need for 20 people?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For 20 adults with an average appetite, you need approximately 7 to 8 large 14-inch pizzas (yielding 56 to 64 slices, assuming 3 slices per adult)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many slices are in a large pizza?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard US large pizza (14 inches) is cut into 8 triangular slices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What pizza toppings should I order for a party?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The golden party rule is 40% Pepperoni, 30% Plain Cheese, 15% Meat Lovers (Sausage/Bacon), and 15% Veggie or Specialty."
+        }
+      }
+    ]
+  }
+]
+</script>
+</head>
+<body>
+<main class="wrap">
+  <div class="backlink-bar">
+    <a href="https://sebiglesias.com.ar" class="backlink">← sebiglesias.com.ar</a>
+  </div>
+
+  <header>
+    <div class="badge-pizzeria">🍕 Party & Event Planning Tool</div>
+    <h1>PizzaCalc<span class="accent">.</span></h1>
+    <p class="sub">Pizza Party Calculator · exact slices, topping breakdown & bill split</p>
+  </header>
+
+  <!-- Real-Time Pizza Peel Canvas Visualizer -->
+  <div class="pizza-stage" aria-label="Real-time visualizer of pizzas on the wooden peel">
+    <div class="pizza-header">
+      <div class="pizza-title">
+        <span>🔥</span> The Pizza Peel
+      </div>
+      <div class="pizza-live-badge">
+        <span class="pulse-dot"></span> LIVE OVEN
+      </div>
+    </div>
+    <div class="canvas-container">
+      <canvas id="pizza-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Primary Inputs Card -->
+  <section class="card" aria-labelledby="sec-people">
+    <div class="row">
+      <div class="field">
+        <label for="adults-val">Adults</label>
+        <div class="stepper">
+          <button type="button" id="adults-minus" aria-label="Decrease adults">−</button>
+          <span class="val" id="adults-val">8</span>
+          <button type="button" id="adults-plus" aria-label="Increase adults">+</button>
+        </div>
+        <span class="hint">Teens count as adults</span>
+      </div>
+      <div class="field">
+        <label for="kids-val">Kids (under 12)</label>
+        <div class="stepper">
+          <button type="button" id="kids-minus" aria-label="Decrease kids">−</button>
+          <span class="val" id="kids-val">2</span>
+          <button type="button" id="kids-plus" aria-label="Increase kids">+</button>
+        </div>
+        <span class="hint">Eat ~1.5 to 2 slices each</span>
+      </div>
+    </div>
+
+    <!-- Appetite Selection -->
+    <div class="field mt">
+      <label>Group Appetite</label>
+      <div class="segments" id="hunger" role="radiogroup" aria-label="Appetite level">
+        <button type="button" data-v="light" aria-pressed="false">Light <span class="seg-sub">2 slices/ea</span></button>
+        <button type="button" data-v="normal" aria-pressed="true">Normal <span class="seg-sub">3 slices/ea</span></button>
+        <button type="button" data-v="hungry" aria-pressed="false">Hungry <span class="seg-sub">4 slices/ea</span></button>
+      </div>
+    </div>
+
+    <!-- Mode Selection: Delivery vs Homemade -->
+    <div class="field mt">
+      <label>Order Type</label>
+      <div class="segments" id="mode" role="radiogroup" aria-label="Delivery or homemade">
+        <button type="button" data-v="delivery" aria-pressed="true">🍕 Delivery / Takeout</button>
+        <button type="button" data-v="dough" aria-pressed="false">🧑‍🍳 Bake from Scratch</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Result Hero Display -->
+  <section class="hero-result" aria-live="polite">
+    <div class="hero-main">
+      <span class="num" id="total-pizzas">4</span>
+      <div class="hero-labels">
+        <span class="unit" id="pizzas-label">Large Pizzas</span>
+        <span class="hero-detail"><strong id="total-slices">28</strong> total slices calculated (8 slices / 14" pie)</span>
+      </div>
+    </div>
+    <div class="hero-badge" id="hero-summary-badge">
+      Safe estimate with 2 leftover slices
+    </div>
+  </section>
+
+  <!-- Delivery Recommendations Card -->
+  <section class="card" id="card-delivery" aria-labelledby="sec-rec">
+    <h2 id="sec-rec">Recommended Pizza Topping Mix</h2>
+    <p class="section-desc">Statistically proven topping distribution for US group events to keep everyone happy:</p>
+    <div class="pizza-items-grid" id="pizza-items">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Homemade Scratch Ingredients Card -->
+  <section class="card hidden" id="card-dough" aria-labelledby="sec-dough">
+    <h2 id="sec-dough">Homemade Dough & Topping Checklist</h2>
+    <p class="section-desc">Scaled Neapolitan/NY style dough recipe for your exact headcount:</p>
+    <ul class="checklist" id="dough-items">
+      <!-- Injected via JavaScript -->
+    </ul>
+    <div class="baker-tip">
+      <strong>💡 Baker's Tip:</strong> For the crispiest crust, preheat your pizza stone or baking steel at 500°F (260°C) for at least 45 minutes before sliding the pizza in.
+    </div>
+  </section>
+
+  <!-- Split the Bill Card -->
+  <section class="card" aria-labelledby="sec-split">
+    <h2 id="sec-split">Split the Bill</h2>
+    <div class="row">
+      <div class="field">
+        <label for="total-cost">Total Order Bill ($ USD)</label>
+        <div class="input-prefix">
+          <span class="prefix">$</span>
+          <input type="number" id="total-cost" placeholder="e.g. 78.50" min="0" step="0.50">
+        </div>
+      </div>
+      <div class="field">
+        <label for="venmo-handle">Venmo / Zelle / CashApp</label>
+        <input type="text" id="venmo-handle" placeholder="@YourUsername or phone" maxlength="50">
+      </div>
+    </div>
+
+    <div class="split-display" id="split-display">
+      <div class="split-col">
+        <span class="split-label">Per Adult Paying</span>
+        <span class="split-val" id="cost-per-person">$0.00</span>
+      </div>
+      <div class="split-col">
+        <span class="split-label">Total Slices</span>
+        <span class="split-val" id="cost-per-slice">$0.00 / slice</span>
+      </div>
+    </div>
+
+    <button type="button" class="btn-share" id="btn-share">
+      <span>📤</span> Copy Order Summary to Clipboard
+    </button>
+  </section>
+
+  <!-- AdSense Responsive Placement -->
+  <div class="adsense-wrap" style="text-align: center; margin: 2rem 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3381238987477190"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- FAQ & Guide (Essential for SEO Ranking) -->
+  <section class="card faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is the "3-Slice Rule" for pizza parties?</h3>
+      <p>The standard catering guideline assumes an average adult will eat <strong>3 slices of a large pizza</strong>. Hungry guests or athletes typically eat 4 to 5 slices, while kids and lighter eaters consume 1 to 2 slices.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why order 14-inch Large pizzas instead of Mediums?</h3>
+      <p>Geometry! A 14-inch Large pizza has 154 square inches of food, while a 12-inch Medium has only 113 square inches. A Large gives you <strong>36% more pizza for usually just 15–20% higher price</strong>, making Large pizzas significantly cheaper per slice.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How should I split flavors for a diverse group?</h3>
+      <p>Stick to the 40/30/15/15 ratio: 40% Pepperoni (America's favorite topping), 30% Plain Cheese (safe for kids and vegetarians), 15% Meat Lovers (Sausage/Bacon), and 15% Veggie or Specialty (Mushroom, BBQ Chicken, or Hawaiian).</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Part of the <a href="https://sebiglesias.com.ar">sebiglesias.com.ar</a> utility tools suite.</p>
+    <p class="copy">Free web utility · No data stored · Made for pizza lovers</p>
+  </footer>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

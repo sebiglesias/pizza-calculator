@@ -1,0 +1,15 @@
+{
+  "name": "Pizza Party Calculator",
+  "short_name": "PizzaCalc",
+  "start_url": "/pizza-calculator/",
+  "display": "standalone",
+  "background_color": "#14130F",
+  "theme_color": "#F59E0B",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
