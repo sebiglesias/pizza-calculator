@@ -6,6 +6,17 @@
 <title>Pizza Party Calculator — How Many Pizzas to Order for Your Group</title>
 <meta name="description" content="Calculate exactly how many pizzas to order for your party, office meeting, or family gathering. Slices by appetite, US topping ratios (pepperoni, cheese, meat lovers), homemade dough recipe, and USD bill split.">
 <link rel="canonical" href="https://sebiglesias.com.ar/pizza-calculator/">
+<link rel="alternate" hreflang="en" href="https://sebiglesias.com.ar/pizza-calculator/">
+<link rel="alternate" hreflang="es" href="https://sebiglesias.com.ar/pizza-calculator/?lang=es">
+<link rel="alternate" hreflang="de" href="https://sebiglesias.com.ar/pizza-calculator/?lang=de">
+<link rel="alternate" hreflang="fr" href="https://sebiglesias.com.ar/pizza-calculator/?lang=fr">
+<link rel="alternate" hreflang="it" href="https://sebiglesias.com.ar/pizza-calculator/?lang=it">
+<link rel="alternate" hreflang="pt" href="https://sebiglesias.com.ar/pizza-calculator/?lang=pt">
+<link rel="alternate" hreflang="nl" href="https://sebiglesias.com.ar/pizza-calculator/?lang=nl">
+<link rel="alternate" hreflang="sv" href="https://sebiglesias.com.ar/pizza-calculator/?lang=sv">
+<link rel="alternate" hreflang="da" href="https://sebiglesias.com.ar/pizza-calculator/?lang=da">
+<link rel="alternate" hreflang="pl" href="https://sebiglesias.com.ar/pizza-calculator/?lang=pl">
+<link rel="alternate" hreflang="x-default" href="https://sebiglesias.com.ar/pizza-calculator/">
 <meta name="theme-color" content="#F59E0B">
 <meta name="robots" content="index, follow, max-image-preview:large">
 
@@ -93,8 +104,20 @@
 </head>
 <body>
 <main class="wrap">
-  <div class="backlink-bar">
+  <div class="backlink-bar" style="display:flex;align-items:center;justify-content:space-between">
     <a href="https://sebiglesias.com.ar" class="backlink">← sebiglesias.com.ar</a>
+      <select id="lang-select" aria-label="Language" style="background:#24221C;border:1px solid rgba(242,239,230,.18);color:#F2EFE6;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:3px 6px;border-radius:3px;cursor:pointer;margin-left:auto">
+  <option value="en">🇺🇸 EN</option>
+  <option value="es">🇪🇸 ES</option>
+  <option value="de">🇩🇪 DE</option>
+  <option value="fr">🇫🇷 FR</option>
+  <option value="it">🇮🇹 IT</option>
+  <option value="pt">🇵🇹 PT</option>
+  <option value="nl">🇳🇱 NL</option>
+  <option value="sv">🇸🇪 SV</option>
+  <option value="da">🇩🇰 DA</option>
+  <option value="pl">🇵🇱 PL</option>
+</select>
   </div>
 
   <header>
@@ -289,5 +312,41 @@
 </main>
 
 <script src="app.js"></script>
+
+<script>
+/* I18N_AUTO_ENGINE */
+(function(){
+  const DICT = {"en": {"title": "PizzaCalc<span class='accent'>.</span>", "sub": "Pizza Party Calculator · exact slices, topping breakdown & bill split"}, "es": {"title": "Calculadora de Pizzas<span class='accent'>.</span>", "sub": "Cuántas pizzas pedir por persona · porciones, gustos y división de gastos"}, "de": {"title": "Pizza-Rechner Party<span class='accent'>.</span>", "sub": "Wie viele Pizzen bestellen für Gäste · Stücke, Beläge & Kosten teilen"}, "fr": {"title": "Calculateur Pizza Soirée<span class='accent'>.</span>", "sub": "Combien de pizzas commander par personne · parts, garnitures et budget"}, "it": {"title": "Calcolatore Pizze Festa<span class='accent'>.</span>", "sub": "Quante pizze ordinare per gli ospiti · tranci, gusti e divisione conto"}, "pt": {"title": "Calculadora de Pizza<span class='accent'>.</span>", "sub": "Quantas pizzas pedir para festa · fatias por pessoa, sabores e rachar conta"}, "nl": {"title": "Pizza Calculator Groep<span class='accent'>.</span>", "sub": "Hoeveel pizza's bestellen voor een feest · punten, toppings & kosten delen"}, "sv": {"title": "Pizzakalkylator Fest<span class='accent'>.</span>", "sub": "Hur många pizzor behövs per person · slice-beräkning & dela notan"}, "da": {"title": "Pizza Beregner Fest<span class='accent'>.</span>", "sub": "Hvor mange pizzaer skal man bestille · stykker pr. person & del regningen"}, "pl": {"title": "Kalkulator Pizzy na Imprezę<span class='accent'>.</span>", "sub": "Ile pizz zamówić dla gości · kawałki, smaki i podział rachunku"}};
+  const h1El = document.querySelector('h1');
+  const subEl = document.querySelector('.sub');
+  const selEl = document.getElementById('lang-select');
+  function applyLang(lang) {
+    const entry = DICT[lang] || DICT.en;
+    document.documentElement.lang = lang;
+    if (h1El && entry.title) h1El.innerHTML = entry.title;
+    if (subEl && entry.sub) subEl.textContent = entry.sub;
+    if (lang !== 'en' && entry.sub) {
+      document.title = h1El ? (h1El.textContent + ' — ' + entry.sub) : entry.sub;
+    }
+  }
+  const params = new URLSearchParams(window.location.search);
+  const init = params.get('lang') || localStorage.getItem('pizza-calculator-lang') || 'en';
+  const valid = DICT[init] ? init : 'en';
+  if (selEl) {
+    selEl.value = valid;
+    selEl.addEventListener('change', function(e) {
+      const nl = e.target.value;
+      localStorage.setItem('pizza-calculator-lang', nl);
+      const u = new URL(window.location.href);
+      if (nl === 'en') u.searchParams.delete('lang');
+      else u.searchParams.set('lang', nl);
+      window.history.replaceState({}, '', u);
+      applyLang(nl);
+    });
+  }
+  applyLang(valid);
+})();
+</script>
+
 </body>
 </html>
